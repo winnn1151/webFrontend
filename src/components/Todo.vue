@@ -19,27 +19,32 @@ export default {
       myText:'',
     }
   },
-  mounted: function(){
-    axios.get(`http://localhost:3000/todo`)
+  created: function(){
+    const username = localStorage.getItem('usr')
+    const password = localStorage.getItem('pwd')
+    axios.get(`http://localhost:3000/todo`,{headers: {username,password}})
     .then(result=> {
         this.todos = result.data
       })
   },
   methods:{
     tambahkan: function(){
-      axios.post(`http://localhost:3000/todo`,{todo: this.myText})
-      axios.get(`http://localhost:3000/todo`)
+      const username = localStorage.getItem('usr')
+      const password = localStorage.getItem('pwd')
+      axios.post(`http://localhost:3000/todo`,{todo: this.myText},{headers: {username,password}})
+      axios.get(`http://localhost:3000/todo`,{headers: {username,password}})
       .then(result=> {
         this.todos = result.data
       })
     },
     hapus: function(id){
-      axios.delete(`http://localhost:3000/todo/${id}`)
-      axios.get(`http://localhost:3000/todo`)
+      const username = localStorage.getItem('usr')
+      const password = localStorage.getItem('pwd')
+      axios.delete(`http://localhost:3000/todo/${id}`,{headers: {username,password}})
+      axios.get(`http://localhost:3000/todo`,{headers: {username,password}})
       .then(result=> {
         this.todos = result.data
       })
-      // alert(id)
     }
   },
 }
